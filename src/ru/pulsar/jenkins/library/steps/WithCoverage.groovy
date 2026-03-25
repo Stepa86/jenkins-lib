@@ -88,7 +88,12 @@ class WithCoverage implements Serializable {
         def script
 
         if (steps.isUnix()) {
-            script = "ps -C '$name' -o pid= || true"
+            script = """
+            set -x
+            ps -C '$name' -o pid= || true
+            """
+            steps.echo('SCRIPT: ' + script.inspect())
+
             pids = steps.sh(script, false, true, 'UTF-8')
         } else {
             script = """@echo off

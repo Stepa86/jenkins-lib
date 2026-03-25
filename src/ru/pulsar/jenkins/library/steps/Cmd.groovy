@@ -26,6 +26,8 @@ class Cmd implements Serializable {
         }
 
         if (steps.isUnix()) {
+            script = "$script"
+            steps.echo('SCRIPT: ' + script.inspect())
             returnValue = steps.sh("$script", returnStatus, returnStdout, encoding)
         } else {
             returnValue = steps.bat("chcp 65001 > nul \n$script", returnStatus, returnStdout, encoding)
